@@ -45,6 +45,7 @@ export default function Home() {
                             <Button variant="secondary">
                                 Learn More
                             </Button>
+                            
                         </div>
 
                         <div
@@ -117,7 +118,7 @@ export default function Home() {
 
             {/* Pricing */}
 
-            <section
+            {/* <section
                 className="border-b dark border-border bg-background">
                 <div className="container mx-auto text-center">
                     <div className="py-14">
@@ -165,7 +166,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
         </>
     );
