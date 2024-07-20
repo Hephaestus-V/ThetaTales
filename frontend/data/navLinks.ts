@@ -12,7 +12,7 @@ export const navLinks = [
         href: "/createTale",
     },
     {
-        title: "Contact",
-        href: "/contact",
+        title: "Subscribe",
+        href: "/subscription",
     },
 ];
