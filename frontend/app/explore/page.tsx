@@ -9,7 +9,7 @@ const sampleBooks = [
     author: "F. Scott Fitzgerald",
     address: "0x7d...b01E",
     description: "A classic novel about the American Dream in the Jazz Age dflajsdlfjlasdkj alsdfjklajsd.",
-    coverUrl: "dashboard-ui.png"
+    coverUrl: "https://gateway.pinata.cloud/ipfs/QmYg8DZBJDm7brdVsrW47hX6iR5CztYmJxLM2SMFLh5SV1"
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const sampleBooks = [
     author: "Harper Lee",
     address: "0x1b...239B",
     description: "A powerful story of racial injustice and loss of innocencjdsflkja lasdjflkjadsk e in the American South.",
-    coverUrl: "dashboard-ui.png"
+    coverUrl: "https://gateway.pinata.cloud/ipfs/QmPt2W4tbCfdcqZ8vpUFcGgtPDvQgnsLgyM2G9xQBDkSrP"
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const sampleBooks = [
     author: "George Orwell",
     address: "0xC7...1272",
     description: "A dystopian novel set in a totalitarian society.",
-    coverUrl: "dashboard-ui.png"
+    coverUrl: "https://gateway.pinata.cloud/ipfs/QmfJfWM72Ge7DMmp5AJtqD3ebrXEXuMdpKTXwY4ddGQA9N"
   },
   {
     id: 4,
