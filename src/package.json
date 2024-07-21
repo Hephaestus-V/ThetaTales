@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -49,10 +49,13 @@
     "lucide-react": "^0.363.0",
     "next": "14.1.4",
     "next-themes": "^0.3.0",
+    "pdfjs-dist": "^4.4.168",
+    "pspdfkit": "^2024.4.0",
     "react": "^18",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "react-pdf": "^9.1.0",
     "react-resizable-panels": "^2.0.16",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
@@ -64,6 +67,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",

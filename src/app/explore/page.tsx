@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import BookCard from '@/components/BookCard';
 
@@ -9,7 +11,8 @@ const sampleBooks = [
     author: "F. Scott Fitzgerald",
     address: "0x7d...b01E",
     description: "A classic novel about the American Dream in the Jazz Age dflajsdlfjlasdkj alsdfjklajsd.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmYg8DZBJDm7brdVsrW47hX6iR5CztYmJxLM2SMFLh5SV1"
+    coverUrl: "https://gateway.pinata.cloud/ipfs/QmYg8DZBJDm7brdVsrW47hX6iR5CztYmJxLM2SMFLh5SV1",
+    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
   },
   {
     id: 2,
@@ -17,7 +20,8 @@ const sampleBooks = [
     author: "Harper Lee",
     address: "0x1b...239B",
     description: "A powerful story of racial injustice and loss of innocencjdsflkja lasdjflkjadsk e in the American South.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmPt2W4tbCfdcqZ8vpUFcGgtPDvQgnsLgyM2G9xQBDkSrP"
+    coverUrl: "https://gateway.pinata.cloud/ipfs/QmPt2W4tbCfdcqZ8vpUFcGgtPDvQgnsLgyM2G9xQBDkSrP",
+    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
   },
   {
     id: 3,
@@ -25,7 +29,8 @@ const sampleBooks = [
     author: "George Orwell",
     address: "0xC7...1272",
     description: "A dystopian novel set in a totalitarian society.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmfJfWM72Ge7DMmp5AJtqD3ebrXEXuMdpKTXwY4ddGQA9N"
+    coverUrl: "https://gateway.pinata.cloud/ipfs/QmfJfWM72Ge7DMmp5AJtqD3ebrXEXuMdpKTXwY4ddGQA9N",
+    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
   },
   {
     id: 4,
@@ -33,7 +38,8 @@ const sampleBooks = [
     author: "Jane Austen",
     address: "0xE0...5a0E",
     description: "A classic romance novel set in 19th century England.",
-    coverUrl: "dashboard-ui.png"
+    coverUrl: "dashboard-ui.png",
+    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
   },
   {
     id: 5,
@@ -41,7 +47,8 @@ const sampleBooks = [
     author: "Jane Austen",
     address: "0xE0...5a0E",
     description: "A classic romance novel set in 19th century England dflasdjflkads alsdfjlasdj.",
-    coverUrl: "dashboard-ui.png"
+    coverUrl: "dashboard-ui.png",
+    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
   },
   {
     id: 6,
@@ -49,7 +56,8 @@ const sampleBooks = [
     author: "Jane Austen",
     address: "0xE0...5a0E",
     description: "A classic romance novel set in 19th century England afsdfsd asdfjlalsd asdfhkhsdf dsfajl.",
-    coverUrl: "dashboard-ui.png"
+    coverUrl: "dashboard-ui.png",
+    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
   }
 ];
 
@@ -62,11 +70,13 @@ const BookMarketplace: React.FC = () => {
           {sampleBooks.map((book) => (
             <BookCard
               key={book.id}
+              id={book.id}
               title={book.title}
               author={book.author}
               address={book.address}
               description={book.description}
               coverUrl={book.coverUrl}
+              pdfUrl={book.pdfUrl}
             />
           ))}
         </div>
