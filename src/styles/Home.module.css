@@ -1,0 +1,223 @@
+/* Home.module.css */
+.container {
+    min-height: 100vh;
+    background-color: #f3f4f6; /* Gray 100 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem; /* py-10 */
+}
+
+.header {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.card {
+    margin-top: 2rem; /* mt-8 */
+    width: 100%;
+    max-width: 48rem; /* max-w-3xl */
+    background-color: #ffffff; /* bg-white */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow-md */
+    padding: 1.5rem; /* p-6 */
+}
+
+.image {
+    margin-top: 1rem; /* mt-4 */
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow-md */
+}
+
+.button {
+    margin-top: 2rem; /* Adjust margin to move the button down */
+    padding: 0.75rem 1.5rem; /* Add padding */
+    font-size: 1rem; /* Font size */
+    font-weight: 600; /* Font weight */
+    color: #ffffff; /* Text color */
+    background-color: #4a90e2; /* Background color */
+    border: none; /* Remove border */
+    border-radius: 0.375rem; /* Border radius */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.button:hover {
+    background-color: #357abd; /* Darker background color on hover */
+}
+
+
+/* Home.module.css */
+.storyContainer {
+    padding: 1rem; /* Add padding around the container */
+}
+
+.storyHeading {
+    font-size: 1.5rem; /* Adjust heading size */
+    font-weight: 700; /* Bold heading */
+    margin-bottom: 1rem; /* Space below heading */
+}
+
+.storyText {
+    font-size: 1rem; /* Adjust text size */
+    line-height: 1.6; /* Increase line height for readability */
+    margin-top: 0.5rem; /* Space above text */
+    margin-bottom: 0.5rem; /* Space below text */
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+}
+
+
+/* Home.module.css */
+.formContainer {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff; /* White background for the form */
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.formLabel {
+    display: block;
+    margin-bottom: 1rem; /* Space below each label */
+    font-size: 1.125rem; /* Slightly larger font size for labels */
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 0.375rem; /* Rounded corners */
+}
+
+.formInput[type="number"] {
+    -moz-appearance: textfield; /* Hide the spinner on number input */
+}
+
+.formInput[type="number"]::-webkit-inner-spin-button,
+.formInput[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.submitButton {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #4a90e2; /* Primary button color */
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+    background-color: #357abd; /* Darker color on hover */
+}
+
+.submitButton:disabled {
+    background-color: #d3d3d3; /* Disabled button color */
+    cursor: not-allowed;
+}
+
+
+/* Home.module.css */
+.storyContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.storyHeading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.storyText {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Home.module.css */
+.image {
+    margin-top: 1rem;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* General styles */
+
+/* Section styling */
+.how-it-works {
+    background-color: #f4f4f9;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #2a2a2a;
+}
+
+.steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.step {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(25% - 40px); /* Adjusts width to fit within the container */
+    box-sizing: border-box;
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    color: #0070f3;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .step {
+        width: calc(50% - 40px); /* Adjust for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .step {
+        width: calc(100% - 40px); /* Full width for very small screens */
+    }
+}
