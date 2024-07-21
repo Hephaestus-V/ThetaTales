@@ -1,10 +1,18 @@
+import { privateKeyToAccount } from "viem/accounts";
+import { config } from '../../config/config'
+import { signMessage } from '@wagmi/core'
+
 
 async function generateAuthToken() : Promise<string> {
   const timestamp = Date.now().toString();
   const msg = `Theta EdgeStore Call ${timestamp}`;
-  const wallet = new Wallet("46bb88d18d3963764c98a1e8ec8e972a55a153d5b7e888d14801fc7a06250843");
-  const signature = await wallet.signMessage(msg);
-  return `${timestamp}.${wallet.address}.${signature}`;
+  const privateKey = process.env.PLATFORM_WALLET!;
+  const account = privateKeyToAccount(privateKey as `0x{string}`);
+  const signature = await signMessage(config, {
+    account,
+    message : msg
+  })
+  return `${timestamp}.${account.address}.${signature}`;
 }
 
 
