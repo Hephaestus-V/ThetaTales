@@ -17,6 +17,9 @@ pnpm-lock.yaml
 # production
 /build
 
+./package-lock.json
+../.idea
+
 # misc
 .DS_Store
 *.pem

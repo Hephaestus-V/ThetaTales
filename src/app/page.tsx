@@ -12,33 +12,17 @@ import {CircleCheck} from "lucide-react";
 
 export default function Home() {
     return (
+
         <>
             <div className="border-b border-border">
                 <main className="container mx-auto">
                     <div className="relative md:mt-24 mx-auto w-full max-w-4xl pt-4 text-center">
-                        <div className="justify-center hidden md:flex">
-                            <div
-                                className="flex flex-row items-center justify-center gap-5 p-1 text-xs bg-card/60 backdrop-blur-lg rounded-md border border-border">
-                                <Badge className="font-semibold">New</Badge>
-                                <h5>Announce your new feature here</h5>
-                                <Link href="/" className="flex flex-row items-center">
-                                    View all features
-                                    <ArrowRightIcon className="w-6 h-6 ml-2"/>
-                                </Link>
-                            </div>
-                        </div>
-                        <h1 className="md:text-7xl my-4 font-extrabold text-4xl md:leading-tight">Create perfect
-                            projects
-                            with
-                            this landing
-                            page!</h1>
+
+                        <h1 className="md:text-7xl my-4 font-extrabold text-4xl md:leading-tight">Theta Tales</h1>
                         <p className="mx-auto my-4 text-sm w-full max-w-xl text-center font-medium leading-relaxed tracking-wide">
-                            This is a landing page template that you can use to create a beautiful website. It is
-                            designed
-                            to be
-                            easy to use and customize. You can use this template to create a landing page for your app,
-                            product,
-                            or service. It is built with Next.js, Tailwind CSS, and TypeScript.
+                            Welcome to Theta Tales, where your imagination meets the cutting-edge of AI and blockchain technology.
+                            Create captivating stories with the help of advanced AI tools, and bring them to life as unique NFTs on the Theta blockchain.
+                            Discover a new way to share and immortalize your creativity.
                         </p>
                         <div className="flex flex-row justify-center items-center space-x-4 my-8">
                             <Button>
@@ -47,7 +31,7 @@ export default function Home() {
                             <Button variant="secondary">
                                 Learn More
                             </Button>
-                            
+
                         </div>
 
                         <div
@@ -62,11 +46,11 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="max-w-4xl mx-auto mb-8">
-                        <Image className="w-full" src="/dashboard-ui.png" alt="Dashboard ui design" priority
-                               width={1200}
-                               height={800}/>
-                    </div>
+                    {/*<div className="max-w-4xl mx-auto mb-8">*/}
+                    {/*    <Image className="w-full" src="/dashboard-ui.png" alt="Dashboard ui design" priority*/}
+                    {/*           width={1200}*/}
+                    {/*           height={800}/>*/}
+                    {/*</div>*/}
                 </main>
             </div>
 
