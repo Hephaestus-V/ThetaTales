@@ -10,21 +10,12 @@ import {CircleCheck} from "lucide-react";
 
 export default function Home() {
     return (
+
         <>
             <div className="border-b border-border">
                 <main className="container mx-auto">
                     <div className="relative md:mt-24 mx-auto w-full max-w-4xl pt-4 text-center">
-                        <div className="justify-center hidden md:flex">
-                            <div
-                                className="flex flex-row items-center justify-center gap-5 p-1 text-xs bg-card/60 backdrop-blur-lg rounded-md border border-border">
-                                <Badge className="font-semibold">New</Badge>
-                                <h5>Announce your new feature here</h5>
-                                <Link href="/" className="flex flex-row items-center">
-                                    View all features
-                                    <ArrowRightIcon className="w-6 h-6 ml-2"/>
-                                </Link>
-                            </div>
-                        </div>
+
                         <h1 className="md:text-7xl my-4 font-extrabold text-4xl md:leading-tight">Theta Tales</h1>
                         <p className="mx-auto my-4 text-sm w-full max-w-xl text-center font-medium leading-relaxed tracking-wide">
                             Welcome to Theta Tales, where your imagination meets the cutting-edge of AI and blockchain technology.
