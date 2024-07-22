@@ -75,12 +75,6 @@
   }
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ... (keep the existing :root and .dark styles) ... */
-
 @layer components {
   .pdf-viewer {
     @apply flex flex-col w-full max-w-6xl mx-auto bg-[#343541] overflow-hidden;

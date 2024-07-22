@@ -1,82 +1,77 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import BookCard from '@/components/BookCard';
+import { useBookManagementRead } from '@/blockchain/hooks/useBookManagementRead';
+import { Book } from '@/types';
 
-// Sample book data
-const sampleBooks = [
-  {
-    id: 1,
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    address: "0x7d...b01E",
-    description: "A classic novel about the American Dream in the Jazz Age dflajsdlfjlasdkj alsdfjklajsd.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmYg8DZBJDm7brdVsrW47hX6iR5CztYmJxLM2SMFLh5SV1",
-    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-  },
-  {
-    id: 2,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    address: "0x1b...239B",
-    description: "A powerful story of racial injustice and loss of innocencjdsflkja lasdjflkjadsk e in the American South.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmPt2W4tbCfdcqZ8vpUFcGgtPDvQgnsLgyM2G9xQBDkSrP",
-    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-  },
-  {
-    id: 3,
-    title: "1984",
-    author: "George Orwell",
-    address: "0xC7...1272",
-    description: "A dystopian novel set in a totalitarian society.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmfJfWM72Ge7DMmp5AJtqD3ebrXEXuMdpKTXwY4ddGQA9N",
-    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-  },
-  {
-    id: 4,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    address: "0xE0...5a0E",
-    description: "A classic romance novel set in 19th century England.",
-    coverUrl: "dashboard-ui.png",
-    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-  },
-  {
-    id: 5,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    address: "0xE0...5a0E",
-    description: "A classic romance novel set in 19th century England dflasdjflkads alsdfjlasdj.",
-    coverUrl: "dashboard-ui.png",
-    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-  },
-  {
-    id: 6,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    address: "0xE0...5a0E",
-    description: "A classic romance novel set in 19th century England afsdfsd asdfjlalsd asdfhkhsdf dsfajl.",
-    coverUrl: "dashboard-ui.png",
-    pdfUrl: "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
-  }
-];
 
 const BookMarketplace: React.FC = () => {
+  const [books, setBooks] = useState<Book[]>([]);
+  const { data: rawBooks, isLoading, isError, refetch } = useBookManagementRead('getBookDetails');
+
+  useEffect(() => {
+    const fetchBookDetails = async () => {
+      if (rawBooks && rawBooks.length > 0) {
+        const enrichedBooks = await Promise.all(rawBooks.map(async (book) => {
+          const ipfsData = await getBookDetailsFromIPFS(book.ipfsCid);
+          return {
+            id: Number(book.id),
+            views: Number(book.views),
+            address: book.owner,
+            title: ipfsData.title || 'Unknown Title',
+            author: ipfsData.author || 'Unknown Author',
+            description: ipfsData.description || 'No description available',
+            coverUrl: ipfsData.coverCid ? `https://ipfs.io/ipfs/${ipfsData.coverCid}` : '/placeholder-cover.jpg',
+            pdfUrl: ipfsData.pdfCid ? `https://ipfs.io/ipfs/${ipfsData.pdfCid}` : '#',
+          };
+        }));
+        setBooks(enrichedBooks);
+      }
+    };
+
+    fetchBookDetails();
+  }, [rawBooks]);
+
+  const getBookDetailsFromIPFS = async (ipfsCid: string) => {
+    try {
+      const response = await axios.get(`https://ipfs.io/ipfs/${ipfsCid}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching book details from IPFS:', error);
+      return {};
+    }
+  };
+
+  if (isLoading) {
+    return <div className="text-center mt-8">Loading books...</div>;
+  }
+
+  if (isError) {
+    return <div className="text-center mt-8 text-red-500">Error loading books. Please try again later.</div>;
+  }
+
+  if (!rawBooks || rawBooks.length === 0) {
+    return <div className="text-center mt-8">No books available.</div>;
+  }
+
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-8">Book Marketplace</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {sampleBooks.map((book) => (
+          {books.map((book) => (
             <BookCard
               key={book.id}
               id={book.id}
               title={book.title}
               author={book.author}
-              address={book.address}
+              address1={book.address}
               description={book.description}
               coverUrl={book.coverUrl}
               pdfUrl={book.pdfUrl}
+              views={book.views}
             />
           ))}
         </div>

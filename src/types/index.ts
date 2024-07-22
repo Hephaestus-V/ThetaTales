@@ -5,7 +5,7 @@ export interface SubscriptionCardProps {
   price: string;
   features: string[];
 }
-export interface BookCardProps {
+export interface Book {
   id: number;
   title: string;
   author: string;
@@ -13,6 +13,17 @@ export interface BookCardProps {
   description: string;
   coverUrl: string;
   pdfUrl: string;
+  views: number;
+}
+export interface BookCardProps {
+  id: number;
+  title: string;
+  author: string;
+  address1: string;
+  description: string;
+  coverUrl: string;
+  pdfUrl: string;
+  views:number
 }
 
 export interface PSPDFKit {
