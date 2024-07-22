@@ -9,7 +9,7 @@ export function authMiddleware(handler: (req: NextRequest) => Promise<NextRespon
     if (!token) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
-    console.log(token)
+    // console.log(token)
     // vefiy the token 
     if (token != process.env.AUTH_KEY!){
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });

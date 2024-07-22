@@ -14,22 +14,6 @@ interface EncryptedFileResult {
   storagestring: string;
 }
 
-// New function to convert File to Buffer
-async function fileToBuffer(file: File): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.result instanceof ArrayBuffer) {
-        resolve(Buffer.from(reader.result));
-      } else {
-        reject(new Error('Failed to read file as ArrayBuffer'));
-      }
-    };
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
-}
-
 export async function encryptFile(fileBuffer: Buffer, platformPublicKey: string): Promise<EncryptedFileResult> {
   const symmetricKey = crypto.randomBytes(32);
   const iv = crypto.randomBytes(16);

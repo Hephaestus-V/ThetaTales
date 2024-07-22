@@ -1,17 +1,22 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { BookProps } from '@/types';
 
-const BookCard: React.FC<BookProps> = ({ title, author, address, description, coverUrl }) => {
+interface BookCardProps {
+  title: string;
+  author: string;
+  coverUrl: string;
+  description?: string;
+}
+
+const BookCard: React.FC<BookCardProps> = ({ title, author, coverUrl, description }) => {
   return (
-    <div className="bg-transparent backdrop-blur-sm rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full">
-      <img src={coverUrl} alt={`${title} Cover`} className="w-full h-64 object-cover"/>
-      <div className="p-4 flex flex-col flex-grow">
-      <h2 className="text-xl font-semibold text-black dark:text-white">{title}</h2>
-        <p className="text-muted-foreground">Author: {author}</p>
-        <p className="text-muted-foreground">{address}</p>
-        <p className="text-muted-foreground mt-2 flex-grow">{description}</p>
-        <Button className="w-full mt-4">View</Button>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+      <img className="w-full" src={coverUrl} alt={`Cover of ${title}`} />
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">{title}</div>
+        <p className="text-gray-700 text-base mb-2">By {author}</p>
+        {description && (
+          <p className="text-gray-700 text-sm">{description}</p>
+        )}
       </div>
     </div>
   );

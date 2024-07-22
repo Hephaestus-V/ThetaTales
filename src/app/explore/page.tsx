@@ -1,72 +1,88 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useContractRead } from 'wagmi';
+import { getContract } from 'wagmi/actions';
 import BookCard from '@/components/BookCard';
 
-// Sample book data
-const sampleBooks = [
+// ABI for the getBookDetails function
+const abi = [
   {
-    id: 1,
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    address: "0x7d...b01E",
-    description: "A classic novel about the American Dream in the Jazz Age dflajsdlfjlasdkj alsdfjklajsd.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmYg8DZBJDm7brdVsrW47hX6iR5CztYmJxLM2SMFLh5SV1"
+    name: 'getBookDetails',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        components: [
+          { name: 'ipfsCid', type: 'string' },
+          // Add other fields from your Book struct here
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
   },
-  {
-    id: 2,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    address: "0x1b...239B",
-    description: "A powerful story of racial injustice and loss of innocencjdsflkja lasdjflkjadsk e in the American South.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmPt2W4tbCfdcqZ8vpUFcGgtPDvQgnsLgyM2G9xQBDkSrP"
-  },
-  {
-    id: 3,
-    title: "1984",
-    author: "George Orwell",
-    address: "0xC7...1272",
-    description: "A dystopian novel set in a totalitarian society.",
-    coverUrl: "https://gateway.pinata.cloud/ipfs/QmfJfWM72Ge7DMmp5AJtqD3ebrXEXuMdpKTXwY4ddGQA9N"
-  },
-  {
-    id: 4,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    address: "0xE0...5a0E",
-    description: "A classic romance novel set in 19th century England.",
-    coverUrl: "dashboard-ui.png"
-  },
-  {
-    id: 5,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    address: "0xE0...5a0E",
-    description: "A classic romance novel set in 19th century England dflasdjflkads alsdfjlasdj.",
-    coverUrl: "dashboard-ui.png"
-  },
-  {
-    id: 6,
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    address: "0xE0...5a0E",
-    description: "A classic romance novel set in 19th century England afsdfsd asdfjlalsd asdfhkhsdf dsfajl.",
-    coverUrl: "dashboard-ui.png"
-  }
 ];
 
+interface ContractBook {
+    ipfsCid: string;
+  // Add other fields that your contract returns
+}
+
+
+interface BookDetails {
+  author: string;
+  frontPageCid: string;
+  encryptedBookCid: string;
+  encryptedSymmetricKey: string;
+  name: string;
+}
+
 const BookMarketplace: React.FC = () => {
+  const [books, setBooks] = useState<BookDetails[]>([]);
+
+  const { data: bookDetailsFromContract } = useContractRead({
+    ...getContract({
+      address: process.env.BOOK_CONTRACT as `0x${string}`,
+      abi: abi,
+    }),
+    functionName: 'getBookDetails',
+  });
+  useEffect(() => {
+    const fetchBookDetails = async () => {
+      if (bookDetailsFromContract && Array.isArray(bookDetailsFromContract)) {
+        const bookPromises = bookDetailsFromContract.map(async (book: ContractBook) => {
+          try {
+            const response = await fetch(`https://ipfs.io/ipfs/${book.ipfsCid}`);
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return await response.json() as BookDetails;
+          } catch (error) {
+            console.error('Error fetching book details from IPFS:', error);
+            return null;
+          }
+        });
+
+        const fetchedBooks = await Promise.all(bookPromises);
+        setBooks(fetchedBooks.filter((book): book is BookDetails => book !== null));
+      }
+    };
+
+    fetchBookDetails();
+  }, [bookDetailsFromContract]);
+
   return (
     <div className="min-h-screen">
       <div className="container mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8">Book Marketplace</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {sampleBooks.map((book) => (
+          {books.map((book, index) => (
             <BookCard
-              key={book.id}
-              title={book.title}
+              key={index}
+              title={book.name}
               author={book.author}
-              address={book.address}
-              description={book.description}
-              coverUrl={book.coverUrl}
+              coverUrl={`https://ipfs.io/ipfs/${book.frontPageCid}`}
+              // You may want to add other props here
             />
           ))}
         </div>

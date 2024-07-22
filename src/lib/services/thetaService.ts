@@ -2,6 +2,7 @@ import { privateKeyToAccount } from "viem/accounts";
 import { config } from '../../config/config'
 import { signMessage } from '@wagmi/core'
 
+const ipfsURI = "https://data.thetaedgestore.com/api/v2/data/";
 
 async function generateAuthToken() : Promise<string> {
   const timestamp = Date.now().toString();
@@ -16,10 +17,18 @@ async function generateAuthToken() : Promise<string> {
 }
 
 
-export async function uploadFile(encryptedFile: Buffer): Promise<string | undefined> {
+export async function uploadFile(file: Buffer | File | object): Promise<string | undefined> {
   const authToken =await generateAuthToken();
   const formData = new FormData();
-  formData.append('file', new Blob([encryptedFile]), 'encrypted_book');
+  if(file instanceof File)
+    formData.append('file', file, 'Cover Page');
+  else if(file instanceof Buffer)
+    formData.append('file', new Blob([file]), 'encrypted_book');
+  else{
+    const jsonString = JSON.stringify(file);
+    const jsonBlob = new Blob([jsonString], { type: 'application/json' });
+    formData.append('file', jsonBlob, 'data.json');
+  }
 
   try {
     const response = await fetch('https://api.thetaedgestore.com/api/v2/data', {
@@ -35,7 +44,8 @@ export async function uploadFile(encryptedFile: Buffer): Promise<string | undefi
     }
 
     const data = await response.json();
-    return data.key;
+    const uri = ipfsURI+ data.key;
+    return uri;
   } catch (error) {
     if (error instanceof Error) {
       console.error('Error:', error.message);
@@ -45,10 +55,11 @@ export async function uploadFile(encryptedFile: Buffer): Promise<string | undefi
   }
 }
 
-export async function fetchFile( thetaKey: string ): Promise<Buffer> {
+
+export async function fetchFile( encryptedBookUrl : string ): Promise<Buffer> {
   const authToken = await generateAuthToken();
 
-  const response = await fetch(`https://data.thetaedgestore.com/api/v2/data/${thetaKey}`, {
+  const response = await fetch(encryptedBookUrl, {
     headers: {
       'x-theta-edgestore-auth': authToken,
     },
