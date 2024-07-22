@@ -1,88 +1,77 @@
-import React, { useEffect, useState } from 'react';
-import { useContractRead } from 'wagmi';
-import { getContract } from 'wagmi/actions';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import BookCard from '@/components/BookCard';
+import { useBookManagementRead } from '@/blockchain/hooks/useBookManagementRead';
+import { Book } from '@/types';
 
-// ABI for the getBookDetails function
-const abi = [
-  {
-    name: 'getBookDetails',
-    type: 'function',
-    stateMutability: 'view',
-    inputs: [],
-    outputs: [
-      {
-        components: [
-          { name: 'ipfsCid', type: 'string' },
-          // Add other fields from your Book struct here
-        ],
-        name: '',
-        type: 'tuple[]',
-      },
-    ],
-  },
-];
-
-interface ContractBook {
-    ipfsCid: string;
-  // Add other fields that your contract returns
-}
-
-
-interface BookDetails {
-  author: string;
-  frontPageCid: string;
-  encryptedBookCid: string;
-  encryptedSymmetricKey: string;
-  name: string;
-}
 
 const BookMarketplace: React.FC = () => {
-  const [books, setBooks] = useState<BookDetails[]>([]);
+  const [books, setBooks] = useState<Book[]>([]);
+  const { data: rawBooks, isLoading, isError, refetch } = useBookManagementRead('getBookDetails');
 
-  const { data: bookDetailsFromContract } = useContractRead({
-    ...getContract({
-      address: process.env.BOOK_CONTRACT as `0x${string}`,
-      abi: abi,
-    }),
-    functionName: 'getBookDetails',
-  });
   useEffect(() => {
     const fetchBookDetails = async () => {
-      if (bookDetailsFromContract && Array.isArray(bookDetailsFromContract)) {
-        const bookPromises = bookDetailsFromContract.map(async (book: ContractBook) => {
-          try {
-            const response = await fetch(`https://ipfs.io/ipfs/${book.ipfsCid}`);
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return await response.json() as BookDetails;
-          } catch (error) {
-            console.error('Error fetching book details from IPFS:', error);
-            return null;
-          }
-        });
-
-        const fetchedBooks = await Promise.all(bookPromises);
-        setBooks(fetchedBooks.filter((book): book is BookDetails => book !== null));
+      if (rawBooks && rawBooks.length > 0) {
+        const enrichedBooks = await Promise.all(rawBooks.map(async (book) => {
+          const ipfsData = await getBookDetailsFromIPFS(book.ipfsCid);
+          return {
+            id: Number(book.id),
+            views: Number(book.views),
+            address: book.owner,
+            title: ipfsData.title || 'Unknown Title',
+            author: ipfsData.author || 'Unknown Author',
+            description: ipfsData.description || 'No description available',
+            coverUrl: ipfsData.coverCid ? `https://ipfs.io/ipfs/${ipfsData.coverCid}` : '/placeholder-cover.jpg',
+            pdfUrl: ipfsData.pdfCid ? `https://ipfs.io/ipfs/${ipfsData.pdfCid}` : '#',
+          };
+        }));
+        setBooks(enrichedBooks);
       }
     };
 
     fetchBookDetails();
-  }, [bookDetailsFromContract]);
+  }, [rawBooks]);
+
+  const getBookDetailsFromIPFS = async (ipfsCid: string) => {
+    try {
+      const response = await axios.get(`https://ipfs.io/ipfs/${ipfsCid}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching book details from IPFS:', error);
+      return {};
+    }
+  };
+
+  if (isLoading) {
+    return <div className="text-center mt-8">Loading books...</div>;
+  }
+
+  if (isError) {
+    return <div className="text-center mt-8 text-red-500">Error loading books. Please try again later.</div>;
+  }
+
+  if (!rawBooks || rawBooks.length === 0) {
+    return <div className="text-center mt-8">No books available.</div>;
+  }
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-8">Book Marketplace</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {books.map((book, index) => (
+          {books.map((book) => (
             <BookCard
-              key={index}
-              title={book.name}
+              key={book.id}
+              id={book.id}
+              title={book.title}
               author={book.author}
-              coverUrl={`https://ipfs.io/ipfs/${book.frontPageCid}`}
-              // You may want to add other props here
+              address1={book.address}
+              description={book.description}
+              coverUrl={book.coverUrl}
+              pdfUrl={book.pdfUrl}
+              views={book.views}
             />
           ))}
         </div>

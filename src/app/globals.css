@@ -74,3 +74,48 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .pdf-viewer {
+    @apply flex flex-col w-full max-w-6xl mx-auto bg-[#343541] overflow-hidden;
+    height: calc(100vh - 4rem); /* Adjust 4rem based on your header/footer height */
+  }
+
+  .pdf-container {
+    @apply flex flex-col w-full h-full relative;
+  }
+
+  .pdf-document-container {
+    @apply w-full h-full overflow-auto pb-16;
+  }
+
+  .pdf-content {
+    @apply flex justify-center min-h-full;
+  }
+
+  .pdf-controls {
+    @apply flex justify-between items-center w-full p-4 bg-[#343541] absolute bottom-0 left-0 right-0;
+  }
+
+  .pdf-controls button {
+    @apply px-3 py-1.5 bg-[#4a4b55] text-white rounded-md 
+           hover:bg-[#5a5b65] focus:outline-none focus:ring-2 focus:ring-[#5a5b65] focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed text-sm;
+  }
+
+  .pdf-controls p {
+    @apply text-sm text-white;
+  }
+
+  .react-pdf__Document {
+    @apply flex flex-col items-center;
+  }
+
+  .react-pdf__Page {
+    @apply max-w-full h-auto mb-4;
+  }
+
+  .react-pdf__Page canvas {
+    @apply max-w-full h-auto;
+  }
+}
