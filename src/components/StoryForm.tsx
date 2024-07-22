@@ -1,6 +1,8 @@
 import { useState, FormEvent } from 'react';
 import axios from 'axios';
 import  styles from '../styles/Home.module.css';
+import { useSendTransaction } from 'wagmi'
+import { parseEther } from 'viem';
 
 interface StoryFormProps {
     onStoryGenerated: (story: string) => void;
@@ -9,10 +11,15 @@ interface StoryFormProps {
 export default function StoryForm({ onStoryGenerated }: StoryFormProps) {
     const [prompt, setPrompt] = useState('');
     const [pages, setPages] = useState(1);
+    const {data,sendTransactionAsync}=useSendTransaction();
 
     const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
 
+        e.preventDefault();
+        
+        const to='0x4913AbCD40a9455a28134b4ccc37f4f95225e593' as `0x${string}` 
+        const value='0.1';
+        await sendTransactionAsync({ to, value: parseEther(value) })
         const response = await axios.post('/api/generate-story', { prompt, pages });
         //const testStory = 'This is a test story generated!';
         onStoryGenerated(response.data.story)

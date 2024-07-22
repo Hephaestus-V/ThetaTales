@@ -1,14 +1,16 @@
 // page.tsx
 "use client";
-import { useState } from 'react';
+import { useState} from 'react';
 import StoryBook from '../../components/StoryBook';
 import StoryForm from "../../components/StoryForm";
-import styles from '../../styles/Home.module.css'; // Import the CSS module
+import styles from '../../styles/Home.module.css'; 
+import next from 'next';
 
 export default function Home() {
     const [story, setStory] = useState<string>('');
     const [image, setImageUrl] = useState<string>('');
     const [pageSize, setPageSize] = useState<number>(1);
+
 
     const handleStoryGenerated = (generatedStory: string) => {
         setStory(generatedStory);
