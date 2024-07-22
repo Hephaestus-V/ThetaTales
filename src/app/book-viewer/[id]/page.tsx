@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { pdfjs, Document as PDFDocument, Page as PDFPage } from 'react-pdf';
 import { useState } from 'react';
+import {useAccount} from 'wagmi'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -14,6 +15,7 @@ interface PDFViewerProps {
 }
 
 const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
+
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
