@@ -25,11 +25,11 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
         <body className={font.className}>
        
         <ThemeProvider>
+        <Web3ModalProvider initialState={initialState}>
             <Navbar/>
-            <Web3ModalProvider initialState={initialState}>
             {children}
-            </Web3ModalProvider>
             <Footer/>
+            </Web3ModalProvider>
         </ThemeProvider>
         
         </body>

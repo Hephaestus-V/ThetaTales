@@ -6,6 +6,7 @@ import { SubscriptionCardProps } from '@/types';
 import { useWalletAndNetworkCheck } from '@/blockchain/hooks/useWalletAndNetworkCheck';
 import { useSubscriptionWrite } from '@/blockchain/hooks/useSubscriptionContract';
 import { parseEther } from 'viem';
+import { ThetaTestnet } from '@/lib/chains';
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ duration, price, features }) => {
   const { isReady, isWalletConnected, isCorrectNetwork } = useWalletAndNetworkCheck();
@@ -18,7 +19,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ duration, price, fe
       default: throw new Error('Invalid duration');
     }
   };
-
+  
   const { write,isPending, isSuccess } = useSubscriptionWrite("subscribe");
 
   const handleSubscribe = async () => {

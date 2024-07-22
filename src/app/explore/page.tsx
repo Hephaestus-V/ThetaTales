@@ -2,15 +2,27 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter} from 'next/navigation';
 import BookCard from '@/components/BookCard';
 import { useBookManagementRead } from '@/blockchain/hooks/useBookManagementRead';
+import { useWalletAndNetworkCheck } from '@/blockchain/hooks/useWalletAndNetworkCheck';
 import { Book } from '@/types';
 
 
 const BookMarketplace: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const { data : rawBooks, isLoading, isError, refetch } = useBookManagementRead('getBookDetails');
+  const {isCorrectNetwork}=useWalletAndNetworkCheck();
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isCorrectNetwork) {
+      alert('Please connect to the correct network.');
+      router.push('/');  // Redirect to the home page or any other page
+    }
+  }, [isCorrectNetwork, router]);
+  
   useEffect(() => {
     const fetchBookDetails = async () => {
       if (rawBooks && rawBooks.length > 0) {
