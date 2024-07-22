@@ -14,6 +14,7 @@ export interface Book {
   coverUrl: string;
   pdfUrl: string;
   views: number;
+  encryptedKeyString : string
 }
 export interface BookCardProps {
   id: number;
@@ -30,4 +31,3 @@ export interface PSPDFKit {
     unload(container: HTMLElement): void;
     load(config: { container: HTMLElement; document: string; baseUrl: string }): Promise<void>;
 }
-
