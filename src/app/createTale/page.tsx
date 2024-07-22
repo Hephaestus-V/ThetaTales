@@ -3,11 +3,8 @@ import { useState } from 'react';
 import StoryBook from '../../components/StoryBook';
 import StoryForm from "../../components/StoryForm";
 import styles from '../../styles/Home.module.css'; // Import the CSS module
-import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import * as fs from "node:fs";
-const base64 = require('base-64');
 
 // Remove unused imports
 // import jsPDF from 'jspdf';
@@ -29,9 +26,9 @@ export default function Home() {
 
     const handleImageGenerated = (generatedImage: string) => {
         setImageUrl(generatedImage);
-        convertImageToBase64(generatedImage, (base64) => {
-            setBase64Image(base64);
-        });
+        // convertImageToBase64(generatedImage, (base64) => {
+        //     setBase64Image(base64);
+        // });
     };
 
     const handleImageLoad = () => {
@@ -52,21 +49,21 @@ export default function Home() {
     //     }
     // };
 
-    const convertImageToBase64 = (url: string, callback: (base64: string) => void) => {
-        fetch(url)
-            .then(response => response.blob())
-            .then(blob => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    callback(reader.result as string);
-                };
-                reader.readAsDataURL(blob);
-            })
-            .catch(error => {
-                console.error('Image fetching error:', error);
-                callback('');
-            });
-    };
+    // const convertImageToBase64 = (url: string, callback: (base64: string) => void) => {
+    //     fetch(url)
+    //         .then(response => response.blob())
+    //         .then(blob => {
+    //             const reader = new FileReader();
+    //             reader.onloadend = () => {
+    //                 callback(reader.result as string);
+    //             };
+    //             reader.readAsDataURL(blob);
+    //         })
+    //         .catch(error => {
+    //             console.error('Image fetching error:', error);
+    //             callback('');
+    //         });
+    // };
 
     const downloadPDF = () => {
         const pdf = new jsPDF();
@@ -81,18 +78,9 @@ export default function Home() {
         pdf.setFontSize(12);
         pdf.setFont("helvetica", "normal");
         pdf.text(story, 20, 35, { maxWidth: 170 });
-        const imagePath = 'img.png';
-        const imageBuffer = fs.readFileSync('../../img.png');
-        const base64Image = imageBuffer.toString('base64');
-
-
         pdf.setLineWidth(0.5);
         pdf.line(20, 25, 190, 25);
 
-        const imgData = 'data:image/jpeg;base64,' + base64Image;
-        //if (base64Image) {
-            pdf.addImage(imgData, 'JPEG', 20, 50, 160, 90);
-      //  }
 
         pdf.save("storybook.pdf");
     };
