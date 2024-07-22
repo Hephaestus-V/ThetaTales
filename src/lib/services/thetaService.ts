@@ -2,7 +2,6 @@ import { privateKeyToAccount } from "viem/accounts";
 import { config } from '../../config/config'
 import { signMessage } from '@wagmi/core'
 
-const ipfsURI = "https://data.thetaedgestore.com/api/v2/data/";
 
 async function generateAuthToken() : Promise<string> {
   const timestamp = Date.now().toString();
@@ -16,6 +15,7 @@ async function generateAuthToken() : Promise<string> {
   return `${timestamp}.${account.address}.${signature}`;
 }
 
+const ipfsURI = 'https://data.thetaedgestore.com/api/v2/data/';
 
 export async function uploadFile(file: Buffer | File | object): Promise<string | undefined> {
   const authToken =await generateAuthToken();
@@ -44,7 +44,7 @@ export async function uploadFile(file: Buffer | File | object): Promise<string |
     }
 
     const data = await response.json();
-    const uri = ipfsURI+ data.key;
+    const uri = ipfsURI + data.key;
     return uri;
   } catch (error) {
     if (error instanceof Error) {

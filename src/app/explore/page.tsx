@@ -9,7 +9,7 @@ import { Book } from '@/types';
 
 const BookMarketplace: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
-  const { data: rawBooks, isLoading, isError, refetch } = useBookManagementRead('getBookDetails');
+  const { data : rawBooks, isLoading, isError, refetch } = useBookManagementRead('getBookDetails');
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -20,11 +20,12 @@ const BookMarketplace: React.FC = () => {
             id: Number(book.id),
             views: Number(book.views),
             address: book.owner,
-            title: ipfsData.title || 'Unknown Title',
-            author: ipfsData.author || 'Unknown Author',
-            description: ipfsData.description || 'No description available',
-            coverUrl: ipfsData.coverCid ? `https://ipfs.io/ipfs/${ipfsData.coverCid}` : '/placeholder-cover.jpg',
-            pdfUrl: ipfsData.pdfCid ? `https://ipfs.io/ipfs/${ipfsData.pdfCid}` : '#',
+            title: ipfsData.Name ,
+            author: ipfsData.Author ,
+            description: ipfsData.Description ,
+            coverUrl: ipfsData.CoverPageUrl ,
+            pdfUrl: ipfsData.encryptedBookUrl,
+            encryptedKeyString : ipfsData.encryptedKeyString
           };
         }));
         setBooks(enrichedBooks);
@@ -36,7 +37,7 @@ const BookMarketplace: React.FC = () => {
 
   const getBookDetailsFromIPFS = async (ipfsCid: string) => {
     try {
-      const response = await axios.get(`https://ipfs.io/ipfs/${ipfsCid}`);
+      const response = await axios.get(ipfsCid);
       return response.data;
     } catch (error) {
       console.error('Error fetching book details from IPFS:', error);

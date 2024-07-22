@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { encryptFile } from "@/lib/services/encryptionService";
 import { uploadFile} from "@/lib/services/thetaService";
 import { authMiddleware } from '@/middleware/authMiddleware';
+import { privateKeyToAccount } from "viem/accounts";
+import { ThetaTestnet } from '@/lib/chains';
+import { createPublicClient, http, createWalletClient, parseAbi } from 'viem'
 
 async function handler(req: NextRequest) {
   const formData = await req.formData();
@@ -43,12 +46,34 @@ async function handler(req: NextRequest) {
 
     const bookMetaUrl = await uploadFile(bookMetadataJson)
 
-    // Here you would typically save the bookMetadata to your database
-    // For example: await saveBookMetadataToDatabase(bookMetadata);
-    //         // We send back the cid, encryptedSymmetricKey to frontend and that will deploy on contract 
-//     // await bookManagement.methods.uploadBook(thetaKey, JSON.stringify(encryptedSymmetricKey), isPublic)
-//     //  
+    const publicClient = createPublicClient({
+      chain: ThetaTestnet,
+      transport: http()
+    })
+    
+    const privateKey = process.env.PLATFORM_WALLET!;
+    const account = privateKeyToAccount(privateKey as `0x{string}`);
+    const walletClient = createWalletClient({
+      account,
+      chain: ThetaTestnet,
+      transport: http()
+    })
+    const contractABI = parseAbi([
+      'function uploadBook(string arg1) public',
+    ])
+    const {request} = await publicClient.simulateContract({
+      account,
+      address : process.env.NEXT_PUBLIC_BOOK_MANAGEMENT_CONTRACT_ADDRESS as `0x{string}`,
+      abi : contractABI,
+      functionName : "uploadBook",
+      args : [bookMetaUrl!]
+    })
+    const hash = await walletClient.writeContract(request)
+    console.log('Transaction hash:', hash)
+    const receipt = await publicClient.waitForTransactionReceipt({ hash })
+    console.log(receipt);
 
+    
     return NextResponse.json({ 
       message: 'Book uploaded successfully', 
       bookMetaUrl 
