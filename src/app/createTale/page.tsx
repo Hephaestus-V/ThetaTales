@@ -23,11 +23,13 @@ export default function Home() {
     }
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.header}>Storybook Generator111</h1>
+        <div className="min-h-screen">
+        <div className="container mx-auto">
+        {/*<div className={styles.container}>*/}
+            <h1 className={styles.header}>Storybook Generator</h1>
             <StoryForm onStoryGenerated={handleStoryGenerated} />
             {story && (
-                <div className={styles.card}>
+                <div>
                     <StoryBook
                         story={story}
                         onImageGenerated={handleImageGenerated}
@@ -42,6 +44,9 @@ export default function Home() {
                     {/*</button>*/}
                 </div>
             )}
+        </div>
+        {/*</div>*/}
+
         </div>
     );
 }

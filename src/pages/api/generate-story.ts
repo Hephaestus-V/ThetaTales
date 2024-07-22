@@ -7,7 +7,7 @@ type Data = {
     pages?: number;
 };
 const openai = new OpenAI({
-    apiKey: '',
+    apiKey: 'sk-proj-oGqo5gfPz0XIb3FVIqJXT3BlbkFJCyOOaKfBfjTz9yaxKeCX',
 });
 // Configure the OpenAI client
 
@@ -34,6 +34,6 @@ export default async function handler(
         res.status(200).json({ story: response.choices[0].text.trim(), pages: pages });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error generating story' });
+        res.status(500).json({ message: `Error generating story ${error}` });
     }
 }

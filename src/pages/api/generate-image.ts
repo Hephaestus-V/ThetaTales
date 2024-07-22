@@ -8,7 +8,7 @@ type Data = {
 };
 
 const openai = new OpenAI({
-    apiKey: 'sk-proj-k6iR6ZIPfWxle1o1I2atT3BlbkFJasKBiuPeTJEX2BRRvWiZ',
+    apiKey: 'sk-proj-oGqo5gfPz0XIb3FVIqJXT3BlbkFJCyOOaKfBfjTz9yaxKeCX',
 });
 // Configure the OpenAI client
 
@@ -27,8 +27,7 @@ export default async function POST(
     try {
         const response = await openai.images.generate({
             model: 'dall-e-3',
-            prompt: 'Create a vibrant and magical illustration for a children\'s storybook.' +
-                        'The story has' + req.body.pages + ' pages.'+ req.body.story,
+            prompt: `Create a vibrant and magical illustration for a children's storybook with ${req.body.pages} pages. Story details: ${req.body.story}`,
             n: 1,
             size: "1024x1024",
         });
