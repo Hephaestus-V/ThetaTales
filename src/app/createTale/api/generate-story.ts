@@ -7,7 +7,7 @@ type Data = {
     pages?: number;
 };
 const openai = new OpenAI({
-    apiKey: 'sk-proj-5du0HZ4wJewCyuCdV8MdT3BlbkFJUINrRYFNzUcJxJgKdenm',
+    apiKey: '',
 });
 // Configure the OpenAI client
 
