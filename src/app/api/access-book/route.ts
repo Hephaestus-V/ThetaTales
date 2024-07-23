@@ -20,7 +20,7 @@ async function handler(req: NextRequest) {
     const encryptedFile = await fetchFile(encryptedBookUrl);
     const decryptedFile = decryptFile(encryptedFile, symmetricKey);
     // if you want to check result uncomment it and write path
-    fs.writeFileSync("/home/vasu/projects/theta-project/src/check.pdf", decryptedFile);
+    // fs.writeFileSync("/home/vasu/projects/theta-project/src/check.pdf", decryptedFile);
     return new NextResponse(decryptedFile, {
       status: 200,
       headers: {
