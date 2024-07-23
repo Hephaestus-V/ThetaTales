@@ -1,14 +1,12 @@
 "use client";
-import { useState } from 'react';
+import { useState} from 'react';
 import StoryBook from '../../components/StoryBook';
 import StoryForm from "../../components/StoryForm";
+
 import styles from '../../styles/Home.module.css'; // Import the CSS module
 import jsPDF from "jspdf";
 import * as fs from "node:fs";
-
-// Remove unused imports
-// import jsPDF from 'jspdf';
-// import html2canvas from 'html2canvas';
+import next from 'next';
 
 export default function Home() {
     const [story, setStory] = useState<string>('');
@@ -16,6 +14,7 @@ export default function Home() {
     const [loading, setLoading] = useState(false);
     const [showPDF, setShowPDF] = useState(false);
     const [base64Image, setBase64Image] = useState<string | null>(null);
+
 
     const handleStoryGenerated = (generatedStory: string) => {
         setStory(generatedStory);
