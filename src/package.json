@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "type": "module",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@noble/secp256k1": "^2.1.0",
