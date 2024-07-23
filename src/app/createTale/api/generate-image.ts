@@ -8,7 +8,7 @@ type Data = {
 };
 
 const openai = new OpenAI({
-    apiKey: 'sk-proj-k6iR6ZIPfWxle1o1I2atT3BlbkFJasKBiuPeTJEX2BRRvWiZ',
+    apiKey: 'sk-proj-5du0HZ4wJewCyuCdV8MdT3BlbkFJUINrRYFNzUcJxJgKdenm',
 });
 // Configure the OpenAI client
 

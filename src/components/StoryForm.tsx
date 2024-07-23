@@ -14,10 +14,9 @@ export default function StoryForm({ onStoryGenerated }: StoryFormProps) {
     const {data,sendTransactionAsync}=useSendTransaction();
 
     const handleSubmit = async (e: FormEvent) => {
-
         e.preventDefault();
         
-        const to='0x4913AbCD40a9455a28134b4ccc37f4f95225e593' as `0x${string}` 
+        const to=process.env.NEXT_PLATFORM_PUBLIC_KEY as `0x${string}` 
         const value='0.1';
         await sendTransactionAsync({ to, value: parseEther(value) })
         const response = await axios.post('/api/generate-story', { prompt, pages });
