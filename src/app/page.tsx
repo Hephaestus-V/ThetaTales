@@ -18,14 +18,14 @@ export default function Home() {
 
                         <h1 className="md:text-7xl my-4 font-extrabold text-4xl md:leading-tight">Theta Tales</h1>
                         <p className="mx-auto my-4 text-sm w-full max-w-xl text-center font-medium leading-relaxed tracking-wide">
-                            Welcome to Theta Tales, where your imagination meets the cutting-edge of AI and blockchain technology.
-                            Create captivating stories with the help of advanced AI tools, and bring them to life as unique NFTs on the Theta blockchain.
-                            Discover a new way to share and immortalize your creativity.
+                        Welcome to Theta Tales, where AI-powered storytelling meets blockchain innovation. Create captivating books effortlessly using AI models, transforming your ideas into fully-fledged narratives and visuals. Publish your creations on our marketplace and earn rewards based on readership. Readers, unlock a world of AI-generated literature with our unique subscription NFT on the Theta blockchain. Join us in revolutionizing how stories are created, shared, and enjoyed in the digital age.
                         </p>
                         <div className="flex flex-row justify-center items-center space-x-4 my-8">
+                        <Link href="/explore" passHref>
                             <Button>
                                 Get Started
                             </Button>
+                        </Link>    
                             <Button variant="secondary">
                                 Learn More
                             </Button>
@@ -43,16 +43,10 @@ export default function Home() {
                                 className="absolute hidden md:block bottom-1/4 left-1/3 w-56 h-56 bg-pink-600 rounded-full mix-blend-multiply opacity-70 animate-blob delay-500 filter blur-3xl"></div>
                         </div>
                     </div>
-
-                    {/*<div className="max-w-4xl mx-auto mb-8">*/}
-                    {/*    <Image className="w-full" src="/dashboard-ui.png" alt="Dashboard ui design" priority*/}
-                    {/*           width={1200}*/}
-                    {/*           height={800}/>*/}
-                    {/*</div>*/}
                 </main>
             </div>
 
-            {/* features */}
+            
 
             <section
                 className="border-b border-border bg-gradient-to-b from-background to-transparent via-background via-90% relative">
@@ -62,12 +56,11 @@ export default function Home() {
                             WHY CHOOSE US
                         </h5>
                         <h2 className="text-4xl font-extrabold my-4">
-                            Build better websites with us
+                            Create and Access AI-Powered Books
                         </h2>
 
                         <p className="mx-auto my-4 text-sm w-full max-w-md bg-transparent text-center font-medium leading-relaxed tracking-wide text-muted-foreground">
-                            Show off your features or services in a beautiful way. This section is perfect for
-                            showcasing
+                            Unleash your creativity with AI-generated books and join our revolutionary marketplace for both creators and readers.
                         </p>
 
                         <div className="flex flex-col md:flex-row gap-4 mt-12">
@@ -99,59 +92,6 @@ export default function Home() {
                         className="absolute bottom-0 right-0 w-1/2 h-56 bg-sky-600 rounded-full mix-blend-multiply opacity-70 animate-blob delay-1000 filter blur-3xl"></div>
                 </div>
             </section>
-
-            {/* Pricing */}
-
-            {/* <section
-                className="border-b dark border-border bg-background">
-                <div className="container mx-auto text-center">
-                    <div className="py-14">
-                        <h2 className="text-4xl font-extrabold my-4 text-foreground">
-                            Pricing Plans
-                        </h2>
-
-                        <p className="mx-auto my-4 text-sm w-full max-w-md bg-transparent text-center font-medium leading-relaxed tracking-wide text-muted-foreground">
-                            Choose a plan that works best for you. You can always upgrade or downgrade your plan later.
-                        </p>
-                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            {pricing.map((plan) => (
-                                <Card key={plan.title} className="w-full mx-auto max-w-xl text-left relative">
-                                    {plan.fancy && (
-                                        <Badge className="absolute top-4 right-4">
-                                            Popular
-                                        </Badge>
-                                    )}
-                                    <CardHeader>
-                                        <CardTitle className="text-2xl">
-                                            {plan.title}
-                                        </CardTitle>
-                                        <CardDescription className="mt-4">
-                                            {plan.description}
-                                        </CardDescription>
-                                        <h5 className="text-2xl font-bold">{plan.price}</h5>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <Button className="w-full" variant={plan.fancy ? "default" : "secondary"}>
-                                            Get Started
-                                        </Button>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <ul className="mt-4">
-                                            {plan.features.map((feature) => (
-                                                <li key={feature} className="flex items-center gap-2">
-                                                    <CircleCheck className="w-4 h-4 text-green-500"/>
-                                                    {feature}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </CardFooter>
-                                </Card>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section> */}
-
         </>
     );
 }
