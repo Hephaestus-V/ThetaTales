@@ -38,13 +38,12 @@ export function useBookManagementWrite(functionName:string) {
     }
   })
 
-  const write = async(args: Array<any>=[],value?: string)=> {
+  const write = async(args: Array<any>=[])=> {
     await writeContractAsync({
         abi:bookManagementABI as Abi,
         address:CONTRACT_ADDRESS as Address,
         args,
         functionName,
-        value:value ? parseEther(value) : undefined,
     });
   }
 

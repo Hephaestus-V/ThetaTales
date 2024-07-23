@@ -22,15 +22,15 @@ export default async function handler(
     const { prompt, pages } = req.body;
 
     try {
-        const maxTokens = 250 * pages;
+        const maxTokens = 250;
         const response = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
-            prompt: `Write story for kids on topic : ${prompt} with max length of ${maxTokens} `,
+            prompt: `Write story image only without typography for kids on topic : ${prompt} with max length of ${maxTokens} tokens.`,
             max_tokens: maxTokens,
-            temperature: 0.7
+            temperature: 0.7,
         });
 
-        console.log(response)
+        console.log(JSON.stringify(response, null, 2));
         res.status(200).json({ story: response.choices[0].text.trim(), pages: pages });
     } catch (error) {
         console.error(error);

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import React from 'react';
 import Link from 'next/link';
@@ -11,11 +11,9 @@ import { useAccount } from 'wagmi';
 const BookCard: React.FC<BookCardProps> = ({ id, title, author, address1, description, coverUrl, pdfUrl, encryptedKeyString }) => {
   const { isReady, isWalletConnected, isCorrectNetwork } = useWalletAndNetworkCheck();
   const {address}=useAccount();
-  // const {data:userToken}= useSubscriptionRead('userTokens',[address]);
-  // let subscriptionStatus=0;
-  // if(userToken){
-  //   let {data:subscriptionStatus}=useSubscriptionRead('checkSubscriptionStatus',[userToken]);
-  // }
+  const {data:userToken}=useSubscriptionRead('userTokens',[address]);
+  const {data:subscriptionStatus}=useSubscriptionRead('checkSubscriptionStatus',[userToken]);
+  
   const handleViewClick = (e: React.MouseEvent) => {
     if (!isWalletConnected) {
       e.preventDefault();
@@ -24,14 +22,14 @@ const BookCard: React.FC<BookCardProps> = ({ id, title, author, address1, descri
       e.preventDefault();
       alert('Please switch to the Theta network to view book details.');
     }
-    // else if(!userToken){
-    //   e.preventDefault();
-    //   alert('please subscribe to avail our Service');
-    // }
-    // else if(subscriptionStatus){
-    //   e.preventDefault();
-    //   alert('Your Subscription Has Expired, Please Subscribe again');
-    // }
+    else if(!userToken){
+      e.preventDefault();
+      alert('please subscribe to avail our Service');
+    }
+    else if(!subscriptionStatus){
+      e.preventDefault();
+      alert('Your Subscription Has Expired, Please Subscribe again');
+    }
     
   };
 
