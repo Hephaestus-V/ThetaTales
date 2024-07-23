@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { BookCardProps } from '@/types';
@@ -6,14 +8,14 @@ import { useSubscriptionRead } from '@/blockchain/hooks/useSubscriptionContract'
 import { useAccount } from 'wagmi';
 
 
-const BookCard: React.FC<BookCardProps> = ({ id, title, author, address1, description, coverUrl, pdfUrl }) => {
+const BookCard: React.FC<BookCardProps> = ({ id, title, author, address1, description, coverUrl, pdfUrl, encryptedKeyString }) => {
   const { isReady, isWalletConnected, isCorrectNetwork } = useWalletAndNetworkCheck();
   const {address}=useAccount();
-  const {data:userToken}=useSubscriptionRead('userTokens',[address]);
-  let subscriptionStatus=0;
-  if(userToken){
-    let {data:subscriptionStatus}=useSubscriptionRead('checkSubscriptionStatus',[userToken]);
-  }
+  // const {data:userToken}= useSubscriptionRead('userTokens',[address]);
+  // let subscriptionStatus=0;
+  // if(userToken){
+  //   let {data:subscriptionStatus}=useSubscriptionRead('checkSubscriptionStatus',[userToken]);
+  // }
   const handleViewClick = (e: React.MouseEvent) => {
     if (!isWalletConnected) {
       e.preventDefault();
@@ -22,14 +24,14 @@ const BookCard: React.FC<BookCardProps> = ({ id, title, author, address1, descri
       e.preventDefault();
       alert('Please switch to the Theta network to view book details.');
     }
-    else if(!userToken){
-      e.preventDefault();
-      alert('please subscribe to avail our Service');
-    }
-    else if(subscriptionStatus){
-      e.preventDefault();
-      alert('Your Subscription Has Expired, Please Subscribe again');
-    }
+    // else if(!userToken){
+    //   e.preventDefault();
+    //   alert('please subscribe to avail our Service');
+    // }
+    // else if(subscriptionStatus){
+    //   e.preventDefault();
+    //   alert('Your Subscription Has Expired, Please Subscribe again');
+    // }
     
   };
 
@@ -44,7 +46,7 @@ const BookCard: React.FC<BookCardProps> = ({ id, title, author, address1, descri
       </div>
       <div className="p-4">
         <Link 
-          href={`/book-viewer/${id}?pdfUrl=${encodeURIComponent(pdfUrl)}`} 
+          href={`/book-viewer/${id}?pdfUrl=${encodeURIComponent(pdfUrl)}&encryptedKeyString=${encodeURIComponent(encryptedKeyString)}`}
           className={`block w-full text-white text-center px-4 py-2 rounded-md ${isReady ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'}`}
           onClick={handleViewClick}
         >

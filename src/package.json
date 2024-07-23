@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -49,6 +49,8 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.0.0",
+    "encoding": "^0.1.13",
+    "fs": "0.0.1-security",
     "input-otp": "^1.2.3",
     "jspdf": "^2.5.1",
     "lucide-react": "^0.363.0",

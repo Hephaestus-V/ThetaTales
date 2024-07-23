@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { decryptSymmetricKey, decryptFile } from "@/lib/services/encryptionService";
 import { fetchFile } from "@/lib/services/thetaService";
 import { authMiddleware } from '@/middleware/authMiddleware';
+import fs from 'fs';
 
 interface Body {
   encryptedBookUrl: string;
@@ -19,12 +20,12 @@ async function handler(req: NextRequest) {
     const encryptedFile = await fetchFile(encryptedBookUrl);
     const decryptedFile = decryptFile(encryptedFile, symmetricKey);
     // if you want to check result uncomment it and write path
-    // fs.writeFileSync(path, decryptedFile);
+    fs.writeFileSync("/home/vasu/projects/theta-project/src/check.pdf", decryptedFile);
     return new NextResponse(decryptedFile, {
       status: 200,
       headers: {
-        'Content-Type': 'application/octet-stream',
-        'Content-Disposition': 'attachment; filename="decrypted_file"'
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'inline; filename="decrypted_file.pdf"'
       }
     });
     // return NextResponse.json({ "message" : "success" }, { status: 200 });

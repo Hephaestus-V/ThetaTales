@@ -25,6 +25,7 @@ export interface BookCardProps {
   coverUrl: string;
   pdfUrl: string;
   views:number
+  encryptedKeyString : string
 }
 
 export interface PSPDFKit {

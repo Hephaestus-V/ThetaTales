@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { pdfjs, Document as PDFDocument, Page as PDFPage } from 'react-pdf';
 import { useState } from 'react';
 import {useAccount} from 'wagmi'
+import { useEffect } from 'react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -12,13 +13,51 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 interface PDFViewerProps {
   pdfUrl: string;
+  encryptedKeyString : string;
 }
 
-const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
+const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl , encryptedKeyString}) => {
 
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
+  const [pdfFile, setPdfFile] = useState<string | null>(null);
+
+   useEffect(() => {
+    const fetchPdf = async () => {
+      try {
+        const response = await fetch('/api/access-book', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `123`
+          },
+          body: JSON.stringify({
+            encryptedBookUrl: pdfUrl,
+            encryptedKeyString: encryptedKeyString
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch PDF');
+        }
+        const arrBuffer = await response.arrayBuffer();
+        const blob = new Blob([arrBuffer])
+        var url = URL.createObjectURL(blob);
+        setPdfFile(url)
+      } catch (error) {
+        console.error('Error fetching PDF:', error);
+      }
+    };
+
+    if (pdfUrl && encryptedKeyString) {
+      fetchPdf();
+    }
+  }, [pdfUrl, encryptedKeyString]);
+
+
+
+
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
@@ -45,7 +84,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       <div className="pdf-container">
         <div className="pdf-document-container">
           <div className="pdf-content">
-            <PDFDocument file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+            <PDFDocument file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
               <PDFPage 
                 pageNumber={pageNumber} 
                 renderAnnotationLayer={false} 
@@ -71,7 +110,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const pdfUrl = searchParams.get('pdfUrl') ?? '';
 
-  return <PDFViewer pdfUrl={pdfUrl} />;
+  const pdfUrl = searchParams?.get('pdfUrl') ?? ' ';
+  const encryptedKeyString = searchParams?.get('encryptedKeyString') ?? '';
+
+  return <PDFViewer pdfUrl={pdfUrl} encryptedKeyString={encryptedKeyString} />;
 }

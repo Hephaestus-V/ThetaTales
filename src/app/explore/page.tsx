@@ -29,6 +29,7 @@ const BookMarketplace: React.FC = () => {
           };
         }));
         setBooks(enrichedBooks);
+        // console.log(enrichedBooks)
       }
     };
 
@@ -72,6 +73,7 @@ const BookMarketplace: React.FC = () => {
               description={book.description}
               coverUrl={book.coverUrl}
               pdfUrl={book.pdfUrl}
+              encryptedKeyString = {book.encryptedKeyString}
               views={book.views}
             />
           ))}
