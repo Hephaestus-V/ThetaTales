@@ -228,3 +228,34 @@
         width: calc(100% - 40px); /* Full width for very small screens */
     }
 }
+
+/* Shared button styles */
+.button {
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Download button styles */
+.downloadButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.downloadButton:hover {
+    background-color: #45a049;
+}
+
+/* Upload button styles */
+.uploadButton {
+    background-color: #008CBA; /* Blue */
+    color: white;
+}
+
+.uploadButton:hover {
+    background-color: #007bb5;
+}
+

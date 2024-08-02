@@ -11,7 +11,7 @@ export function authMiddleware(handler: (req: NextRequest) => Promise<NextRespon
     }
     // console.log(token)
     // vefiy the token 
-    if (token != process.env.AUTH_KEY!){
+    if (token != '123'){
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 

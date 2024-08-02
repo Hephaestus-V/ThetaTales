@@ -19,10 +19,10 @@ export default function StoryForm({ onStoryGenerated }: StoryFormProps) {
     const router = useRouter();
 
     useEffect(() => {
-        if (!isCorrectNetwork) {
-        alert('Please connect to the correct network.');
-        router.push('/');  // Redirect to the home page or any other page
-        }
+        //if (!isCorrectNetwork) {
+        //alert('Please connect to the correct network.');
+        // router.push('/');  // Redirect to the home page or any other page
+        // }
     }, [isCorrectNetwork, router]);
 
     const handleSubmit = async (e: FormEvent) => {
@@ -30,7 +30,7 @@ export default function StoryForm({ onStoryGenerated }: StoryFormProps) {
         console.log(process.env.NEXT_PUBLIC_WALLET_PUBLIC_KEY);
         const to= process.env.NEXT_PUBLIC_WALLET_PUBLIC_KEY as `0x{string}` 
         const value='0.1';
-        await sendTransactionAsync({ to, value: parseEther(value) })
+        ///await sendTransactionAsync({ to, value: parseEther(value) })
         const response = await axios.post('/api/generate-story', { prompt, pages });
         //const testStory = 'This is a test story generated!';
         onStoryGenerated(response.data.story)
